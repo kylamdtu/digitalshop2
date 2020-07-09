@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+  <head th:replace="dashboard/fragments/head.html :: head(title='Edit promotion')">
+  </head>
+
+  <body>
+    <nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'promotion')"></nav>
+    <div class="container-fluid">
+      <nav
+        th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'promotion')"
+      ></nav>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <form th:replace="dashboard/promotion/form.html :: form(action = 'update', promotion=${promotion})"></form>
+      </main>
+    </div>
+    <th:block th:replace="dashboard/fragments/head.html :: js"> </th:block>
+  </body>
+</html>

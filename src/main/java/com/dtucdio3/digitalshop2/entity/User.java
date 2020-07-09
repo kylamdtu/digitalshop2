@@ -26,6 +26,7 @@ public class User {
     @Size(max = 40)
     private String name;
 
+    @NaturalId
     @NotBlank
     @Size(max = 15)
     private String username;
@@ -106,7 +107,9 @@ public class User {
     }
 
     public void addRole(Role role) {
-        this.roles = new HashSet<>();
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
         roles.add(role);
     }
 }

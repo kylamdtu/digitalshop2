@@ -1,99 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title></title>
-  </head>
-  <body>
-    <h2>Create customer</h2>
-    <form th:fragment="product-form(action, product)"
+</head>
+<body>
+<h2>Tạo mới sản phẩm</h2>
+<form th:fragment="form(action, product)"
       th:action="@{/admin/product/} + ${action}"
       method="post"
       class="col-md-6"
       th:object="${product}"
-    >
-      <br>
-      <br>
-      <input th:field="*{id}" hidden>
-      <div class="form-group">
+>
+    <br>
+    <br>
+    <input th:field="*{id}" hidden>
+    <div class="form-group">
         <label for="name">Tên sản phẩm</label>
         <input
-          th:field="*{name}"
-          type="text"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
-          id="name"
+                required
+                th:field="*{name}"
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                id="name"
         />
         <div
-          th:if="${#fields.hasErrors('name')}"
-          th:errors="*{name}"
-          class="invalid-feedback"
+                th:if="${#fields.hasErrors('name')}"
+                th:errors="*{name}"
+                class="invalid-feedback"
         ></div>
-      </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
         <label for="mail">Số lượng</label>
         <input
-          th:field="*{quantity}"
-          type="text"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid' : ''"
-          id="mail"
+                required
+                th:field="*{quantity}"
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid' : ''"
+                id="mail"
         />
         <div
-          th:if="${#fields.hasErrors('quantity')}"
-          th:errors="*{quantity}"
-          class="invalid-feedback"
+                th:if="${#fields.hasErrors('quantity')}"
+                th:errors="*{quantity}"
+                class="invalid-feedback"
         ></div>
-      </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
         <label for="price">Giá</label>
         <input
-          th:field="*{price}"
-          type="text"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''"
-          id="price"
+                required
+                th:field="*{price}"
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''"
+                id="price"
         />
         <div
-          th:if="${#fields.hasErrors('price')}"
-          th:errors="*{price}"
-          class="invalid-feedback"
+                th:if="${#fields.hasErrors('price')}"
+                th:errors="*{price}"
+                class="invalid-feedback"
         ></div>
-      </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
         <label for="category">Thể loại</label>
         <select
+                required
                 th:field="*{category.id}"
                 class="custom-select"
                 id="category"
                 th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' : ''"
-                required
-                th:each="category: ${categoryList}"
-        >ss
-          <option th:value="${category.id}" th:text="${category.name}"></option>
+        >
+            <option th:each="category: ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
         </select>
         <div
                 th:if="${#fields.hasErrors('category')}"
                 th:errors="*{category}"
                 class="invalid-feedback"
         ></div>
-      </div>
-      <div class="form-group">
+    </div>
+    <div class="form-group">
         <label for="description">Mô tả</label>
         <textarea
-          th:field="*{description}"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"
-          id="description"
+                required
+                th:field="*{description}"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"
+                id="description"
         ></textarea>
         <div
-          th:if="${#fields.hasErrors('description')}"
-          th:errors="*{description}"
-          class="invalid-feedback"
+                th:if="${#fields.hasErrors('description')}"
+                th:errors="*{description}"
+                class="invalid-feedback"
         ></div>
-      </div>
-      <button class="btn btn-primary" type="submit" th:text="${action == 'create'} ? 'Create' : 'Update'"></button>
-    </form>
-  </body>
+    </div>
+    <button class="btn btn-primary" type="submit" th:text="${action == 'create'} ? 'Tạo' : 'Sửa'"></button>
+</form>
+</body>
 </html>

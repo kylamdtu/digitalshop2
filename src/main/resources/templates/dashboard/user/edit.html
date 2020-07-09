@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-  <head th:replace="dashboard/fragments/head.html :: head(title='Edit product')">
+  <head th:replace="dashboard/fragments/head.html :: head(title='Edit user')">
   </head>
 
   <body>
-    <nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'product')"></nav>
+    <nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'user')"></nav>
     <div class="container-fluid">
       <nav
         th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'customer')"
       ></nav>
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <form th:replace="dashboard/product/form.html :: form(action = 'update', product=${product})"></form>
+        <form th:replace="dashboard/user/form.html :: form(action = 'update', user=${user})"></form>
       </main>
     </div>
     <th:block th:replace="dashboard/fragments/head.html :: js"> </th:block>

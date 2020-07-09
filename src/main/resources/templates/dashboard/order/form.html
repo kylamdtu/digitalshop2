@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+</head>
+<body>
+<h2>Tạo mới đơn hàng</h2>
+<form th:fragment="form(action, order)"
+      th:action="@{/admin/order/} + ${action}"
+      method="post"
+      class="col-md-6"
+      th:object="${order}"
+>
+    <br>
+    <br>
+    <input th:field="*{id}" hidden>
+
+    <div class="form-group">
+        <label for="userId">Mã khách hàng</label>
+        <input
+                required
+                th:field="*{user.id}"
+                type="number"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('user')} ? 'is-invalid' : ''"
+                id="userId"
+        />
+        <div
+                th:if="${#fields.hasErrors('user')}"
+                th:errors="*{user}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="deliveryDay">Ngày giao hàng</label>
+        <input
+                required
+                th:field="*{deliveryDay}"
+                type="date"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('deliveryDay')} ? 'is-invalid' : ''"
+                id="deliveryDay"
+        />
+        <div
+                th:if="${#fields.hasErrors('deliveryDay')}"
+                th:errors="*{deliveryDay}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="status">Trạng thái</label>
+        <textarea
+                required
+                th:field="*{status}"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' : ''"
+                id="status"
+        ></textarea>
+        <div
+                th:if="${#fields.hasErrors('status')}"
+                th:errors="*{status}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <button class="btn btn-primary" type="submit" th:text="${action == 'create'} ? 'Tạo' : 'Sửa'"></button>
+</form>
+</body>
+</html>
