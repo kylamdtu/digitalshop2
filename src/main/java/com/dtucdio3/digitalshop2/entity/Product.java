@@ -73,8 +73,7 @@ public class Product {
 		this.category = category;
 	}
 
-	@OneToMany
-	@JoinColumn(name = "productId", referencedColumnName = "id")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
 	public Set<Image> getImages() {
 		return images;
 	}
@@ -110,6 +109,13 @@ public class Product {
 
 	public void addPromotionDetail(PromotionDetail promotionDetail) {
 		promotionDetails.add(promotionDetail);
+	}
+
+	public void addImage(Image image) {
+		if (images == null) {
+			images = new HashSet<>();
+		}
+		images.add(image);
 	}
 
 }

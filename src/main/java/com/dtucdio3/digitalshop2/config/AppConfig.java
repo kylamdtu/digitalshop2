@@ -7,11 +7,12 @@ import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.format.DateTimeFormatter;
 
 @Configuration
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
 	
 	@Bean
 	public JpaVendorAdapter jpaVendorAdapter(){
@@ -33,5 +34,6 @@ public class AppConfig {
 		registrar.registerFormatters(conversionService);
 		return conversionService;
 	}
+
 }
 

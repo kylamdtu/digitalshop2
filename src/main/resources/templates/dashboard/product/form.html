@@ -12,6 +12,7 @@
       method="post"
       class="col-md-6"
       th:object="${product}"
+      enctype="multipart/form-data"
 >
     <br>
     <br>
@@ -95,6 +96,15 @@
                 th:errors="*{description}"
                 class="invalid-feedback"
         ></div>
+    </div>
+    <div class="form-group">
+        <label for="description">Upload ảnh</label>
+        <br/><br/>
+        File to upload (1): <input th:field="*{fileData}" type="file"/><br />
+        File to upload (2): <input th:field="*{fileData}" type="file"/><br />
+        File to upload (3): <input th:field="*{fileData}" type="file"/><br />
+        File to upload (4): <input th:field="*{fileData}" type="file"/><br />
+        File to upload (5): <input th:field="*{fileData}" type="file"/><br />
     </div>
     <button class="btn btn-primary" type="submit" th:text="${action == 'create'} ? 'Tạo' : 'Sửa'"></button>
 </form>
