@@ -1,11 +1,12 @@
 package com.dtucdio3.digitalshop2.service;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.dtucdio3.digitalshop2.entity.Product;
 import com.dtucdio3.digitalshop2.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -14,6 +15,10 @@ public class ProductService {
 	
 	public List<Product> listAll(){
 		return productRepo.findAll();
+	}
+
+	public Page<Product> findAll(Pageable pageable) {
+		return productRepo.findAll(pageable);
 	}
 	
 	public void save(Product product) {

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-  <head th:replace="admin/fragments/head.html :: head(title='List customer')">
-  </head>
 
-  <body>
-    <nav th:replace="admin/fragments/nav-bar.html :: nav-bar(customer)"></nav>
-    <div class="container-fluid">
-      <nav
-        th:replace="admin/fragments/side-bar.html :: side-bar(current = 'customer')"
-      ></nav>
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <form th:replace="admin/customer/form.html :: customer-form(action = 'create')"></form>
-      </main>
-    </div>
-    <th:block th:replace="admin/fragments/head.html :: js"> </th:block>
-  </body>
+<head th:replace="dashboard/fragments/head.html :: head(title='Dashboard')">
+</head>
+<body>
+<nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'dashboard')"></nav>
+<div class="container-fluid">
+  <nav th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'home')">
+  </nav>
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <form th:replace="dashboard/product/form.html :: product-form(action = 'create', product = ${product})"></form>
+  </main>
+</div>
+<th:block th:replace="dashboard/fragments/head.html :: js">
+</th:block>
+</body>
+
 </html>

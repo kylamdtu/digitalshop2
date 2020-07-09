@@ -7,155 +7,89 @@
   </head>
   <body>
     <h2>Create customer</h2>
-    <form th:fragment="customer-form(action)"
-      th:action="@{/admin/customer/} + ${action}"
+    <form th:fragment="product-form(action, product)"
+      th:action="@{/admin/product/} + ${action}"
       method="post"
       class="col-md-6"
-      th:object="${customer}"
+      th:object="${product}"
     >
+      <br>
+      <br>
+      <input th:field="*{id}" hidden>
       <div class="form-group">
-        <label for="id">Customer Id</label>
+        <label for="name">Tên sản phẩm</label>
         <input
-          th:field="*{customerId}"
+          th:field="*{name}"
           type="text"
           class="form-control"
-          th:classappend="${#fields.hasErrors('customerId')} ? 'is-invalid' : ''"
-          th:readonly="${action == 'update'}"
-          id="fullName"
+          th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+          id="name"
         />
         <div
-          th:if="${#fields.hasErrors('customerId')}"
-          th:errors="*{customerId}"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"
           class="invalid-feedback"
         ></div>
       </div>
       <div class="form-group">
-        <label for="fullName">Full name</label>
+        <label for="mail">Số lượng</label>
         <input
-          th:field="*{fullName}"
+          th:field="*{quantity}"
           type="text"
           class="form-control"
-          th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid' : ''"
-          id="fullName"
-        />
-        <div
-          th:if="${#fields.hasErrors('fullName')}"
-          th:errors="*{fullName}"
-          class="invalid-feedback"
-        ></div>
-      </div>
-      <div class="form-group">
-        <label for="mail">Email</label>
-        <input
-          th:field="*{email}"
-          type="text"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+          th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid' : ''"
           id="mail"
         />
         <div
-          th:if="${#fields.hasErrors('email')}"
-          th:errors="*{email}"
+          th:if="${#fields.hasErrors('quantity')}"
+          th:errors="*{quantity}"
           class="invalid-feedback"
         ></div>
       </div>
       <div class="form-group">
-        <label for="dateOfBirth">Date of birth</label>
+        <label for="price">Giá</label>
         <input
-          th:field="*{dateOfBirth}"
-          type="date"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'is-invalid' : ''"
-          id="dateOfBirth"
-        />
-        <div
-          th:if="${#fields.hasErrors('dateOfBirth')}"
-          th:errors="*{dateOfBirth}"
-          class="invalid-feedback"
-        ></div>
-      </div>
-      <div class="form-group">
-        <label for="identityCardNumber">Identity card number</label>
-        <input
-          th:field="*{identityCardNumber}"
+          th:field="*{price}"
           type="text"
           class="form-control"
-          th:classappend="${#fields.hasErrors('identityCardNumber')} ? 'is-invalid' : ''"
-          id="identityCardNumber"
+          th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''"
+          id="price"
         />
         <div
-          th:if="${#fields.hasErrors('identityCardNumber')}"
-          th:errors="*{identityCardNumber}"
+          th:if="${#fields.hasErrors('price')}"
+          th:errors="*{price}"
           class="invalid-feedback"
         ></div>
       </div>
       <div class="form-group">
-        <label for="genderSelect">Gender</label>
+        <label for="category">Thể loại</label>
         <select
-          th:field="*{gender}"
-          class="custom-select"
-          id="genderSelect"
-          th:classappend="${#fields.hasErrors('gender')} ? 'is-invalid' : ''"
-          required
-        >
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Another">Another</option>
+                th:field="*{category.id}"
+                class="custom-select"
+                id="category"
+                th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' : ''"
+                required
+                th:each="category: ${categoryList}"
+        >ss
+          <option th:value="${category.id}" th:text="${category.name}"></option>
         </select>
         <div
-          th:if="${#fields.hasErrors('gender')}"
-          th:errors="*{gender}"
-          class="invalid-feedback"
+                th:if="${#fields.hasErrors('category')}"
+                th:errors="*{category}"
+                class="invalid-feedback"
         ></div>
       </div>
       <div class="form-group">
-        <label for="contactNumber">Contact number</label>
-        <input
-          th:field="*{contactNumber}"
-          type="text"
+        <label for="description">Mô tả</label>
+        <textarea
+          th:field="*{description}"
           class="form-control"
-          th:classappend="${#fields.hasErrors('contactNumber')} ? 'is-invalid' : ''"
-          id="contactNumber"
-        />
+          th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"
+          id="description"
+        ></textarea>
         <div
-          th:if="${#fields.hasErrors('contactNumber')}"
-          th:errors="*{contactNumber}"
-          class="invalid-feedback"
-        ></div>
-      </div>
-      <div class="form-group">
-        <label for="address">Address</label>
-        <input
-          th:field="*{address}"
-          type="text"
-          class="form-control"
-          th:classappend="${#fields.hasErrors('address')} ? 'is-invalid' : ''"
-          id="address"
-        />
-        <div
-          th:if="${#fields.hasErrors('address')}"
-          th:errors="*{address}"
-          class="invalid-feedback"
-        ></div>
-      </div>
-      <div class="form-group">
-        <label for="customerTypeSelect">Customer type</label>
-        <select
-          th:field="*{customerType}"
-          class="custom-select"
-          th:classappend="${#fields.hasErrors('customerType')} ? 'is-invalid' : ''"
-          id="customerTypeSelect"
-          required
-        >
-          <option
-            th:each="customerType : ${customerTypes}"
-            th:value="${customerType.id}"
-            th:text="${customerType.name}"
-          ></option>
-        </select>
-        <div
-          th:if="${#fields.hasErrors('customerType')}"
-          th:errors="*{customerType}"
+          th:if="${#fields.hasErrors('description')}"
+          th:errors="*{description}"
           class="invalid-feedback"
         ></div>
       </div>
