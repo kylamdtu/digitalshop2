@@ -40,6 +40,6 @@ public class AuthController {
         newUser.setUsername(user.getUsername());
         newUser.setName(user.getName());
         userService.registerNewUser(newUser);
-        return "redirect:/login";
+        return "redirect:/login?register";
     }
 }
