@@ -5,7 +5,7 @@
     <title>Insert title here</title>
     <th:block th:fragment="link">
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
+        <link rel="shortcut icon" type="/image/x-icon" href="/images/favicon.png">
         <!-- Material Design Iconic Font-V2.2.0 -->
         <link rel="stylesheet" href="/css/material-design-iconic-font.min.css">
         <!-- Font Awesome -->
@@ -127,11 +127,11 @@
                                 <div class="minicart">
                                     <ul class="minicart-product-list">
                                         <li th:each="p : ${cart.getProducts()}">
-                                            <a href="single-product.html" class="minicart-product-image">
-                                                <img th:src="@{images/product/large-size/__${p.firstImage().imageUrl}__}" alt="cart products">
+                                            <a th:href="@{/product-detail/__${p.id}__}" class="minicart-product-image">
+                                                <img th:src="@{/images/product/large-size/__${p.firstImage().imageUrl}__}" alt="cart products">
                                             </a>
                                             <div class="minicart-product-details">
-                                                <h6><a href="#" th:text="${p.name}"></a></h6>
+                                                <h6><a th:href="@{/product-detail/__${p.id}__}" th:text="${p.name}"></a></h6>
                                                 <span th:text="*{#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ' + ' x ' + ${cart.getProductQuantity(p)}"></span>
                                             </div>
                                             <button class="close">

@@ -15,6 +15,12 @@ public class Cart {
         this.totalQuantity = 0;
     }
 
+    public void clear() {
+        products.clear();
+        this.totalPrice = 0;
+        this.totalQuantity = 0;
+    }
+
     private long calTotalPrice() {
         totalPrice = 0;
         totalQuantity = 0;

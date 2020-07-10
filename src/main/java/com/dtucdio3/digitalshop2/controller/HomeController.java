@@ -104,6 +104,7 @@ public class HomeController {
 				order.addOrderDetail(orderDetail);
 			}
 			orderService.save(order);
+			cart.clear();
 			return "redirect:/checkout?success";
 		}
 	}
