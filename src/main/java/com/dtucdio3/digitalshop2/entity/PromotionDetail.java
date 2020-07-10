@@ -1,5 +1,6 @@
 package com.dtucdio3.digitalshop2.entity;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class PromotionDetail {
 	private LocalDate startingDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endingDate;
+	@Range(min = 1, message = "Chiết khấu phải lớn hơn 0.")
 	private float discount;
 	@NotBlank(message = "Quà tặng không được để trống.")
 	@Size(min = 6, message = "Độ dài tối thiểu 6 ký tự.")
