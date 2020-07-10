@@ -2,15 +2,18 @@ package com.dtucdio3.digitalshop2.controller;
 
 import com.dtucdio3.digitalshop2.entity.*;
 import com.dtucdio3.digitalshop2.service.CategoryService;
+import com.dtucdio3.digitalshop2.service.OrderService;
 import com.dtucdio3.digitalshop2.service.ProductService;
 import com.dtucdio3.digitalshop2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -30,6 +33,9 @@ public class HomeController {
 	@Autowired
 	private CategoryService categoryService;
 
+	@Autowired
+	private OrderService orderService;
+
 	@ModelAttribute("cart")
 	public Cart cart() {
 		return new Cart();
@@ -47,14 +53,17 @@ public class HomeController {
 		return "home/index";
 	}
 
+	@GetMapping("/addToCart/{productId}")
+	public String addToCartLink(@PathVariable Integer productId, @ModelAttribute("cart") Cart cart) {
+		Product product = productService.get(productId);
+		cart.addToCart(product);
+		return "redirect:/";
+	}
+
 	@PostMapping("/addToCart/{productId}")
 	public String addToCart(@PathVariable Integer productId, @ModelAttribute("cart") Cart cart, @RequestParam("quantity") Integer quantity) {
 		Product product = productService.get(productId);
-		if (quantity != null) {
-			cart.addToCart(product, quantity);
-			return "redirect:/";
-		}
-		cart.addToCart(product);
+		cart.addToCart(product, quantity);
 		return "redirect:/";
 	}
 
@@ -71,10 +80,34 @@ public class HomeController {
 		return "home/product-detail";
 	}
 
-	@GetMapping("/checkout}")
-	public String checkOut() {
+	@GetMapping("/checkout")
+	public String checkout(@ModelAttribute("cart") Cart cart) {
 		return "home/checkout";
 	}
+
+	@PostMapping("/checkout")
+	public String processCheckout(@ModelAttribute("cart") Cart cart) {
+		if (cart.getTotalQuantity() == 0) {
+			return "redirect:/checkout?error";
+		} else {
+			MyUserPrincipal userPrincipal = (MyUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			User user = userPrincipal.getUser();
+			Order order = new Order();
+			order.setUser(user);
+			order.setStatus("Đã đặt hàng.");
+			order.setCreateDay(LocalDate.now());
+			order.setDeliveryDay(null);
+			for (Product p: cart.getProducts()) {
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setQuantity(cart.getProductQuantity(p));
+				orderDetail.setId(order, p);
+				order.addOrderDetail(orderDetail);
+			}
+			orderService.save(order);
+			return "redirect:/checkout?success";
+		}
+	}
+
 
 	@GetMapping("/login")
 	public String loginPage(Model model) {

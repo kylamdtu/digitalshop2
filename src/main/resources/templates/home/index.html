@@ -10,6 +10,17 @@
 </head>
 <body>
 <header th:insert="~{home/fragment/header :: header(categories = ${categories}, cart =${cart})}"></header>
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li class="active">Home</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
 <div class="slider-with-banner">
     <div class="container">
         <div class="row">
@@ -121,13 +132,12 @@
                                             </div>
                                         </div>
                                         <div class="add-actions">
-                                            <form id="add-to-cart" th:action="@{/addToCart/__${product.id}__}" method="post" class="cart-quantity">
-                                                <ul class="add-actions-link">
-                                                    <li class="add-cart active">
-                                                        <a href="javascript:document.getElementById('add-to-cart').submit();">Add to cart</a>
-                                                    </li>
-                                                </ul>
-                                            </form>
+                                            <ul class="add-actions-link">
+                                                <li class="add-cart active">
+                                                    <input name="quantity" hidden="hidden" value="1">
+                                                    <a th:href="@{/addToCart/__${product.id}__}">Add to cart</a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

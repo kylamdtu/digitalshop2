@@ -61,7 +61,7 @@ public class Order {
 		this.status = status;
 	}
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "orderId", referencedColumnName = "id")
 	public Set<OrderDetail> getDetail() {
 		return detail;

@@ -10,8 +10,124 @@
 </head>
 <body>
 <header th:insert="~{home/fragment/header :: header(categories = ${categories}, cart = ${cart})}"></header>
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="active">Checkout</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<div class="checkout-area pt-60 pb-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-lg-12 justify-content-md-between">
+                    <div class="your-order">
+                        <h3>Đơn hàng của bạn</h3>
+                        <div class="your-order-table table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="cart-product-name">Sản phẩm</th>
+                                    <th class="cart-product-total">Giá</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product : ${cart.getProducts()}" class="cart_item">
+                                    <td class="cart-product-name">
+                                        <span th:text="${product.name}"></span>
+                                        <strong class="product-quantity" th:text="' x ' + ${cart.getProductQuantity(product)}"></strong>
+                                    </td>
+                                    <td class="cart-product-total"><span class="amount" th:text="*{#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr class="cart-subtotal">
+                                    <th>Tổng giỏ hàng</th>
+                                    <td><span class="amount" th:text="*{#numbers.formatDecimal(cart.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span></td>
+                                </tr>
+                                <tr class="order-total">
+                                    <th>Tổng đơn hàng</th>
+                                    <td><strong><span class="amount" th:text="*{#numbers.formatDecimal(cart.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span></strong></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                <div id="accordion">
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-1">
+                                            <h5 class="panel-title">
+                                                <a class="" data-toggle="collapse" data-target="#collapseOne"
+                                                   aria-expanded="true"
+                                                   aria-controls="collapseOne">
+                                                    Chuyển tiền trực tiếp qua ngân hàng.
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi.
+                                                    Vui lòng sử dụng ID đơn hàng của bạn để đối chiếu với phiếu thanh toán.
+                                                    Đơn hàng của bạn sẽ không được giao cho đến khi tiền được chuyển vào tài khoản của chúng tôi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-2">
+                                            <h5 class="panel-title">
+                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                                                   aria-expanded="false" aria-controls="collapseTwo">
+                                                    Thanh toán bằng séc
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi.
+                                                    Vui lòng sử dụng ID đơn hàng của bạn để đối chiếu với phiếu thanh toán.
+                                                    Đơn hàng của bạn sẽ không được giao cho đến khi tiền được chuyển vào tài khoản của chúng tôi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="#payment-3">
+                                            <h5 class="panel-title">
+                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree"
+                                                   aria-expanded="false" aria-controls="collapseThree">
+                                                    Thanh toán bằng PayPal
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi.
+                                                    Vui lòng sử dụng ID đơn hàng của bạn để đối chiếu với phiếu thanh toán.
+                                                    Đơn hàng của bạn sẽ không được giao cho đến khi tiền được chuyển vào tài khoản của chúng tôi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-button-payment col-lg-3">
+                                    <form th:action="@{/checkout}" method="post" class="cart-quantity">
+                                        <button class="add-to-cart" type="submit">Đặt hàng</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <footer th:insert="~{home/fragment/footer :: footer}"></footer>
-
 <th:block th:insert="~{home/fragment/footer :: js}"></th:block>
 </body>
 </html>
