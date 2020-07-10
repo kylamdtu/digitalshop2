@@ -167,11 +167,9 @@ public class AdminController {
     }
 
     @PostMapping("/product/{id}/promotion")
-    public String processAddingPromotion(@PathVariable Integer id, @Valid @ModelAttribute("promotionDetail") PromotionDetail promotionDetail, BindingResult result) {
-        if (result.hasErrors()) {
-            return "dashboard/product/add-promotion";
-        }
+    public String processAddingPromotion(@PathVariable Integer id, @ModelAttribute("promotionDetail") PromotionDetail promotionDetail) {
         Product product = productService.get(id);
+        System.out.println(product.getId());
         product.addPromotionDetail(promotionDetail);
         productService.save(product);
         return "redirect:/admin/product/{1}/promotion".replace("{1}", id.toString());
@@ -462,10 +460,10 @@ public class AdminController {
         product.setCategory(productImage.getCategory());
         product.setDescription(productImage.getDescription());
         product.setPrice(productImage.getPrice());
-        product.setQuantity(product.getQuantity());
+        product.setQuantity(productImage.getQuantity());
         productService.save(product);
         // Thư mục gốc upload file.
-        String uploadRootPath = request.getSession().getServletContext().getRealPath("upload");
+        String uploadRootPath = request.getSession().getServletContext().getRealPath("images/product/large-size");
         System.out.println("uploadRootPath=" + uploadRootPath);
         File uploadRootDir = new File(uploadRootPath);
         if (!uploadRootDir.exists()) {

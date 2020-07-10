@@ -23,7 +23,6 @@
                             th:field="*{id}"
                             class="custom-select"
                             id="category"
-                            required
                     >
                         <option th:each="promotion : ${promotionDetails}" th:value="${promotion.id}" th:text="${promotion.discount} + '%, ' + ${promotion.gift}"></option>
                     </select>

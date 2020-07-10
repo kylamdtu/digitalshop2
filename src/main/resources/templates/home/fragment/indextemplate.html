@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Digital Shop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:insert="~{home/fragment/header :: link}"></th:block>
+</head>
+<body>
+<header th:insert="~{home/fragment/header :: header(categories = ${categories})}"></header>
+<footer th:insert="~{home/fragment/footer :: footer}"></footer>
+
+<th:block th:insert="~{home/fragment/footer :: js}"></th:block>
+</body>
+</html>

@@ -46,7 +46,7 @@ public class Product {
 	}
 	
 	@Column(name = "quantity")
-	@Size(max = 60, min = 6, message = "Độ dài tối thiểu 6 đến 60 ký tự.")
+	@Range(min = 1, message = "Số lượng phải lớn hơn 0.")
 	public int getQuantity() {
 		return quantity;
 	}
@@ -125,6 +125,31 @@ public class Product {
 			images = new HashSet<>();
 		}
 		images.add(image);
+	}
+
+	public Image firstImage() {
+		if (images != null) {
+			if (images.isEmpty()){
+				return null;
+			}
+			return images.iterator().next();
+		}
+		return null;
+	}
+
+	public PromotionDetail firstPromotion() {
+		if (promotionDetails != null) {
+			if (promotionDetails.isEmpty()) {
+				return null;
+			}
+			return getPromotionDetails().iterator().next();
+		}
+		return null;
+	}
+
+
+	public long discountPrice() {
+		return (long) (price - price*firstPromotion().getDiscount()/100);
 	}
 
 }

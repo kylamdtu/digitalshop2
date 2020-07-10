@@ -1,16 +1,15 @@
 package com.dtucdio3.digitalshop2.controller;
 
-import java.util.List;
-
+import com.dtucdio3.digitalshop2.entity.Category;
+import com.dtucdio3.digitalshop2.service.CategoryService;
+import com.dtucdio3.digitalshop2.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dtucdio3.digitalshop2.entity.Category;
-import com.dtucdio3.digitalshop2.entity.Product;
-import com.dtucdio3.digitalshop2.service.CategoryService;
-import com.dtucdio3.digitalshop2.service.ProductService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class homeController {
@@ -22,14 +21,16 @@ public class homeController {
 	private CategoryService categoryService;
 	
 	@RequestMapping("/")
-	public String viewHomePage(Model model) {
-		for (Category category : categoryService.listAll()) {
-			List<Product> products = productService.listByCategory(category.getName());
-			model.addAttribute("list"+category.getId(), products);	
-		}
+	public String viewHomePage(Model model, HttpServletRequest request) {
 		List<Category> categories = categoryService.listAll();
 		model.addAttribute("categories", categories);
+		model.addAttribute("baseURL", getBaseURL(request));
 		return "home/index";
+	}
+
+	//get base URL
+	public String getBaseURL(HttpServletRequest request){
+		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 	}
 	
 	
