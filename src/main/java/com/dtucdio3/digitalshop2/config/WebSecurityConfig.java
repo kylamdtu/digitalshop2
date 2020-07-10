@@ -30,12 +30,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String list[] = {
+                "/",
+                "/register",
+                "/login",
+                "/css/**",
+                "/js/**",
+                "/fonts/**",
+                "/images/**",
+                "/upload/**",
+                "/addToCart/**",
+                "/removeFromCart/**",
+                "/updateProductQuantity/**"
+        };
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/login", "/css/**", "/js/**", "/fonts/**", "/images/**", "/upload/**").permitAll()
+                .antMatchers(list).permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

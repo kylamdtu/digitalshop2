@@ -9,7 +9,7 @@
     <th:block th:insert="~{home/fragment/header :: link}"></th:block>
 </head>
 <body>
-<header th:insert="~{home/fragment/header :: header(categories = ${categories})}"></header>
+<header th:insert="~{home/fragment/header :: header(categories = ${categories}, cart =${cart})}"></header>
 <div class="slider-with-banner">
     <div class="container">
         <div class="row">
@@ -123,7 +123,7 @@
                                         <div class="add-actions">
                                             <ul class="add-actions-link">
                                                 <li class="add-cart active">
-                                                    <a href="#">Add to cart</a>
+                                                    <a th:href="@{/addToCart/__${product.id}__}">Add to cart</a>
                                                 </li>
                                             </ul>
                                         </div>

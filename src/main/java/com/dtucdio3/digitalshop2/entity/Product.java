@@ -82,7 +82,7 @@ public class Product {
 		this.category = category;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.EAGER)
 	public Set<Image> getImages() {
 		return images;
 	}
