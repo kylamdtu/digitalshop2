@@ -29,6 +29,7 @@ public class AuthController {
         model.addAttribute("user", new Register());
         return "home/login-register";
     }
+
     @PostMapping("/register")
     public String processRegister(@ModelAttribute("user") @Valid Register user, BindingResult result) {
         if (result.hasErrors()) {
@@ -40,6 +41,6 @@ public class AuthController {
         newUser.setUsername(user.getUsername());
         newUser.setName(user.getName());
         userService.registerNewUser(newUser);
-        return "redirect:/login?register";
+        return "redirect:/login" + "?register";
     }
 }
