@@ -25,8 +25,8 @@
 <div class="checkout-area pt-60 pb-30">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="col-lg-12 justify-content-md-between">
+            <div class="col-12 row justify-content-md-center">
+                <div class="col-lg-10">
                     <div class="your-order">
                         <h3>Đơn hàng của bạn</h3>
                         <div class="your-order-table table-responsive">
@@ -58,11 +58,13 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <div th:if="${param.success}" class="alert alert-primary" role="alert">
-                            Đặt hàng thành công.
-                        </div>
-                        <div th:if="${param.error}" class="alert alert-warning" role="alert">
-                            Bạn chưa thêm gì vào giỏ hàng.
+                        <div class="row justify-content-center">
+                            <div th:if="${param.success}" class="alert alert-primary col-lg-8" role="alert">
+                                Đặt hàng thành công.
+                            </div>
+                            <div th:if="${param.error}" class="alert alert-warning col-lg-8" role="alert">
+                                Bạn chưa thêm gì vào giỏ hàng.
+                            </div>
                         </div>
                         <div class="payment-method">
                             <div class="payment-accordion">
@@ -120,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="order-button-payment col-lg-3">
+                                <div class="order-button-payment col-lg-5">
                                     <form th:action="@{/checkout}" method="post" class="cart-quantity">
                                         <button class="add-to-cart" type="submit">Đặt hàng</button>
                                     </form>
