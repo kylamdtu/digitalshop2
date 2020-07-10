@@ -32,4 +32,8 @@ public class ProductService {
 	public void delete(int id) {
 		productRepo.deleteById(id);
 	}
+	
+	public List<Product> listByCategory(String categoryName){
+		return productRepo.findProductByCategoryName(categoryName);
+	}
 }
