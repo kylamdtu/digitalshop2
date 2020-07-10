@@ -1,5 +1,6 @@
 package com.dtucdio3.digitalshop2.entity;
 import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 
 @Entity

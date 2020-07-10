@@ -1,5 +1,7 @@
 package com.dtucdio3.digitalshop2.entity;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class OrderDetail {
 
 
     @Column(name = "quantity")
+    @Range(message = "Số lượng phải lớn hơn 0.")
     public int getQuantity() {
         return quantity;
     }

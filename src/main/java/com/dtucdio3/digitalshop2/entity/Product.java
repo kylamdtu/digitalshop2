@@ -1,4 +1,9 @@
-package com.dtucdio3.digitalshop2.entity;import javax.persistence.*;
+package com.dtucdio3.digitalshop2.entity;
+
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +37,7 @@ public class Product {
 	}
 	
 	@Column(name = "name")
+	@Size(max = 60, min = 6, message = "Độ dài tối thiểu 6 đến 60 ký tự.")
 	public String getName() {
 		return name;
 	}
@@ -40,6 +46,7 @@ public class Product {
 	}
 	
 	@Column(name = "quantity")
+	@Size(max = 60, min = 6, message = "Độ dài tối thiểu 6 đến 60 ký tự.")
 	public int getQuantity() {
 		return quantity;
 	}
@@ -48,6 +55,7 @@ public class Product {
 	}
 	
 	@Column(name = "price")
+	@Range(min = 1, message = "Giá phải lớn hơn 0.")
 	public long getPrice() {
 		return price;
 	}
@@ -56,6 +64,7 @@ public class Product {
 	}
 	
 	@Column(name = "description")
+	@Size(min = 6, message = "Độ dài tối thiểu 6 ký tự.")
 	public String getDescription() {
 		return description;
 	}

@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -165,7 +167,10 @@ public class AdminController {
     }
 
     @PostMapping("/product/{id}/promotion")
-    public String processAddingPromotion(@PathVariable Integer id, @ModelAttribute PromotionDetail promotionDetail) {
+    public String processAddingPromotion(@PathVariable Integer id, @Valid @ModelAttribute("promotionDetail") PromotionDetail promotionDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/product/add-promotion";
+        }
         Product product = productService.get(id);
         product.addPromotionDetail(promotionDetail);
         productService.save(product);
@@ -198,7 +203,10 @@ public class AdminController {
     }
 
     @PostMapping("/promotion/create")
-    public String createPromotion(@ModelAttribute PromotionDetail promotionDetail) {
+    public String createPromotion(@Valid @ModelAttribute("promotion") PromotionDetail promotionDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/promotion/create";
+        }
         promotionDetailService.save(promotionDetail);
         return "redirect:/admin/promotion";
     }
@@ -212,7 +220,10 @@ public class AdminController {
 
 
     @PostMapping("/promotion/update")
-    public String updatePromotion(@ModelAttribute PromotionDetail promotionDetail) {
+    public String updatePromotion(@Valid @ModelAttribute("promotion") PromotionDetail promotionDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/promotion/edit";
+        }
         promotionDetailService.save(promotionDetail);
         return "redirect:/admin/promotion";
     }
@@ -254,7 +265,10 @@ public class AdminController {
     }
 
     @PostMapping("/user/create")
-    public String processCreatingUser(@ModelAttribute User user) {
+    public String processCreatingUser(@Valid @ModelAttribute User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/user/create";
+        }
         userService.registerNewUser(user);
         return "redirect:/admin/user";
     }
@@ -267,8 +281,11 @@ public class AdminController {
     }
 
     @PostMapping("/user/update")
-    public String processUpdatingUser(@ModelAttribute User user) {
-        userService.registerNewUser(user);
+    public String processUpdatingUser(@Valid @ModelAttribute User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/user/edit";
+        }
+        userService.updateUser(user);
         return "redirect:/admin/user";
     }
 
@@ -289,7 +306,10 @@ public class AdminController {
     }
 
     @PostMapping("/user/{userId}/role")
-    public String processAddingRole(@PathVariable Long userId, @ModelAttribute Role role) {
+    public String processAddingRole(@PathVariable Long userId, @Valid @ModelAttribute Role role, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/user/add-role";
+        }
         User user = userService.findUserById(userId).orElse(null);
         user.addRole(role);
         userService.updateUser(user);
@@ -341,7 +361,10 @@ public class AdminController {
     }
 
     @PostMapping("/order/create")
-    public String processCreatingOrder(@ModelAttribute Order order) {
+    public String processCreatingOrder(@Valid @ModelAttribute Order order, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/order/create";
+        }
         order.setCreateDay(LocalDate.now());
         orderService.save(order);
         return "redirect:/admin/order";
@@ -355,7 +378,10 @@ public class AdminController {
     }
 
     @PostMapping("/order/update")
-    public String processUpdatingOrder(@ModelAttribute Order order) {
+    public String processUpdatingOrder(@Valid @ModelAttribute Order order, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/order/edit";
+        }
         order.setCreateDay(orderService.findById(order.getId()).getCreateDay());
         orderService.save(order);
         return "redirect:/admin/order";
@@ -377,7 +403,10 @@ public class AdminController {
     }
 
     @PostMapping("/order/{orderId}/orderDetail")
-    public String processAddingOrderDetail(@PathVariable Integer orderId, @ModelAttribute Product product, @RequestParam Integer quantity) {
+    public String processAddingOrderDetail(@PathVariable Integer orderId, @Valid @ModelAttribute Product product, @Valid @RequestParam Integer quantity, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/order/add-order-detail";
+        }
         Order order = orderService.findById(orderId);
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setId(order, product);
@@ -409,15 +438,19 @@ public class AdminController {
     @RequestMapping(value = "/product/create", method = RequestMethod.POST)
     public String processCreatingProduct(HttpServletRequest request, //
                                            Model model, //
-                                           @ModelAttribute("productImage") ProductImage productImage) {
-
+                                           @Valid @ModelAttribute("product") ProductImage productImage, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/product/create";
+        }
         return this.doUpload(request, model, productImage);
     }
     @RequestMapping(value = "/product/update", method = RequestMethod.POST)
     public String processUpdatingProduct(HttpServletRequest request, //
                                            Model model, //
-                                           @ModelAttribute("productImage") ProductImage productImage) {
-
+                                           @Valid @ModelAttribute("product") ProductImage productImage, BindingResult result) {
+        if (result.hasErrors()) {
+            return "dashboard/product/edit";
+        }
         return this.doUpload(request, model, productImage);
     }
 

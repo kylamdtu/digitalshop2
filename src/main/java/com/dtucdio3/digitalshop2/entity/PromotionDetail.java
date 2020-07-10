@@ -3,6 +3,8 @@ package com.dtucdio3.digitalshop2.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -18,6 +20,8 @@ public class PromotionDetail {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endingDate;
 	private float discount;
+	@NotBlank(message = "Quà tặng không được để trống.")
+	@Size(min = 6, message = "Độ dài tối thiểu 6 ký tự.")
 	private String gift;
 	@ManyToMany(mappedBy = "promotionDetails")
 	private Set<Product> products;
