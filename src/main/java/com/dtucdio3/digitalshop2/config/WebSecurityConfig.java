@@ -43,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/upload/**",
                 "/addToCart/**",
                 "/removeFromCart/**",
-                "/updateProductQuantity/**"
+                "/updateProductQuantity/**",
+                "/product-detail/**"
         };
         http.csrf().disable()
                 .authorizeRequests()

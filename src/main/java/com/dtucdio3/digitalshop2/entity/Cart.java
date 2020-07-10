@@ -45,6 +45,16 @@ public class Cart {
         products.put(product, 1);
         calTotalPrice();
     }
+    public void addToCart(Product product, Integer quantity) {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            if (product.getId() == entry.getKey().getId()) {
+                products.put(entry.getKey(), quantity);
+                return;
+            }
+        }
+        products.put(product, quantity);
+        calTotalPrice();
+    }
 
     public void removeFromCart(Product product) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {

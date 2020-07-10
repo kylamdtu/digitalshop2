@@ -121,11 +121,13 @@
                                             </div>
                                         </div>
                                         <div class="add-actions">
-                                            <ul class="add-actions-link">
-                                                <li class="add-cart active">
-                                                    <a th:href="@{/addToCart/__${product.id}__}">Add to cart</a>
-                                                </li>
-                                            </ul>
+                                            <form id="add-to-cart" th:action="@{/addToCart/__${product.id}__}" method="post" class="cart-quantity">
+                                                <ul class="add-actions-link">
+                                                    <li class="add-cart active">
+                                                        <a href="javascript:document.getElementById('add-to-cart').submit();">Add to cart</a>
+                                                    </li>
+                                                </ul>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

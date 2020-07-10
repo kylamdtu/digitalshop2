@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Digital Shop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:insert="~{home/fragment/header :: link}"></th:block>
+</head>
+<body>
+<header th:insert="~{home/fragment/header :: header(categories = ${categories}, cart = ${cart})}"></header>
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="index-2.html">Trang chủ</a></li>
+                <li class="active">Chi tiết sản phẩm</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- content-wraper start -->
+<div class="content-wraper">
+    <div class="container">
+        <div class="row single-product-area">
+            <div class="col-lg-5 col-md-6">
+                <!-- Product Details Left -->
+                <div class="product-details-left">
+                    <div class="product-details-images slider-navigation-1">
+                        <div th:each="img : ${product.getImages()}" class="lg-image">
+                            <a class="popup-img venobox vbox-item" th:href="@{/images/product/large-size/__${img.imageUrl}__}"
+                               data-gall="myGallery">
+                                <img th:src="@{/images/product/large-size/__${img.imageUrl}__}" alt="product image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--// Product Details Left -->
+            </div>
+
+            <div class="col-lg-7 col-md-6">
+                <div class="product-details-view-content pt-60">
+                    <div class="product-info">
+                        <h2 th:text="${product.name}"></h2>
+                        <span th:text="${product.category.name}" class="product-details-ref"></span>
+                        <div class="rating-box pt-20">
+                            <ul class="rating rating-with-review-item">
+                                <li><i class="fa fa-star-o"></i></li>
+                                <li><i class="fa fa-star-o"></i></li>
+                                <li><i class="fa fa-star-o"></i></li>
+                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                            </ul>
+                        </div>
+                        <div class="price-box pt-20">
+                            <span class="new-price new-price-2" th:text="${product.price}"></span>
+                        </div>
+                        <div class="product-desc">
+                            <p>
+                                <span th:text="${product.description}">
+                                 </span>
+                            </p>
+                        </div>
+                        <div class="single-add-to-cart">
+                            <form th:action="@{/addToCart/__${product.id}__}" method="post" class="cart-quantity">
+                                <div class="quantity">
+                                    <label>Số lượng</label>
+                                    <div class="cart-plus-minus">
+                                        <input name="quantity" class="cart-plus-minus-box" value="1" type="text">
+                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                    </div>
+                                </div>
+                                <button class="add-to-cart" type="submit">Thêm vào giỏ</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- content-wraper end -->
+<footer th:insert="~{home/fragment/footer :: footer}"></footer>
+<th:block th:insert="~{home/fragment/footer :: js}"></th:block>
+</body>
+</html>

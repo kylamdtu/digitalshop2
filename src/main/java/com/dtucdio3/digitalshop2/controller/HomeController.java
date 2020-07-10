@@ -47,9 +47,13 @@ public class HomeController {
 		return "home/index";
 	}
 
-	@GetMapping("/addToCart/{productId}")
-	public String addToCart(@PathVariable Integer productId, @ModelAttribute("cart") Cart cart) {
+	@PostMapping("/addToCart/{productId}")
+	public String addToCart(@PathVariable Integer productId, @ModelAttribute("cart") Cart cart, @RequestParam("quantity") Integer quantity) {
 		Product product = productService.get(productId);
+		if (quantity != null) {
+			cart.addToCart(product, quantity);
+			return "redirect:/";
+		}
 		cart.addToCart(product);
 		return "redirect:/";
 	}
@@ -59,6 +63,17 @@ public class HomeController {
 		Product product = productService.get(productId);
 		cart.removeFromCart(product);
 		return "redirect:/";
+	}
+
+	@GetMapping("/product-detail/{id}")
+	public String productDetail(@PathVariable Integer id, @ModelAttribute("cart") Cart cart, Model model) {
+		model.addAttribute("product", productService.get(id));
+		return "home/product-detail";
+	}
+
+	@GetMapping("/checkout}")
+	public String checkOut() {
+		return "home/checkout";
 	}
 
 	@GetMapping("/login")
