@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class homeController {
+public class HomeController {
 	
 	@Autowired
 	private ProductService productService;
@@ -24,14 +24,6 @@ public class homeController {
 	public String viewHomePage(Model model, HttpServletRequest request) {
 		List<Category> categories = categoryService.listAll();
 		model.addAttribute("categories", categories);
-		model.addAttribute("baseURL", getBaseURL(request));
 		return "home/index";
 	}
-
-	//get base URL
-	public String getBaseURL(HttpServletRequest request){
-		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-	}
-	
-	
 }
