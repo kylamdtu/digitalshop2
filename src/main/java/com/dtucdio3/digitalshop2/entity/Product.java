@@ -1,20 +1,11 @@
-package com.dtucdio3.digitalshop2.entity;import java.util.HashSet;
+package com.dtucdio3.digitalshop2.entity;
+
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Product",
@@ -26,9 +17,9 @@ public class Product {
 	private long price;
 	private String description;
 	private Category category;
-	private Set<Promotion> promotions = new HashSet<Promotion>();
 	private Set<Image> images = new HashSet<Image>();
-	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(); 
+	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>();
+	private Set<PromotionDetail> promotionDetails = new HashSet<>();
 	
 
 	public Product() {
@@ -46,6 +37,7 @@ public class Product {
 	}
 	
 	@Column(name = "name")
+	@Size(max = 60, min = 6, message = "Độ dài tối thiểu 6 đến 60 ký tự.")
 	public String getName() {
 		return name;
 	}
@@ -54,6 +46,7 @@ public class Product {
 	}
 	
 	@Column(name = "quantity")
+	@Size(max = 60, min = 6, message = "Độ dài tối thiểu 6 đến 60 ký tự.")
 	public int getQuantity() {
 		return quantity;
 	}
@@ -62,6 +55,7 @@ public class Product {
 	}
 	
 	@Column(name = "price")
+	@Range(min = 1, message = "Giá phải lớn hơn 0.")
 	public long getPrice() {
 		return price;
 	}
@@ -70,6 +64,7 @@ public class Product {
 	}
 	
 	@Column(name = "description")
+	@Size(min = 6, message = "Độ dài tối thiểu 6 ký tự.")
 	public String getDescription() {
 		return description;
 	}
@@ -79,7 +74,6 @@ public class Product {
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "catId")
-	@JsonManagedReference
 	public Category getCategory() {
 		return category;
 	}
@@ -88,9 +82,7 @@ public class Product {
 		this.category = category;
 	}
 
-	@OneToMany
-	@JoinColumn(name = "productId", referencedColumnName = "id")
-	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
 	public Set<Image> getImages() {
 		return images;
 	}
@@ -101,7 +93,6 @@ public class Product {
 
 	@OneToMany
 	@JoinColumn(name = "productId")
-	@JsonBackReference
 	public Set<OrderDetail> getOrderDetails() {
 		return orderDetails;
 	}
@@ -110,16 +101,30 @@ public class Product {
 		this.orderDetails = orderDetails;
 	}
 
-	@OneToMany
-	@JoinColumn(name = "productId", referencedColumnName = "id")
-	@JsonBackReference
-	public Set<Promotion> getPromotions() {
-		return promotions;
+
+	@ManyToMany
+	@JoinTable(
+			name = "promotion",
+			joinColumns = @JoinColumn(name = "product_id"),
+			inverseJoinColumns = @JoinColumn(name = "promotion_detail_id")
+	)
+	public Set<PromotionDetail> getPromotionDetails() {
+		return promotionDetails;
 	}
 
-	public void setPromotions(Set<Promotion> promotions) {
-		this.promotions = promotions;
+	public void setPromotionDetails(Set<PromotionDetail> promotionDetails) {
+		this.promotionDetails = promotionDetails;
 	}
-	
-	
+
+	public void addPromotionDetail(PromotionDetail promotionDetail) {
+		promotionDetails.add(promotionDetail);
+	}
+
+	public void addImage(Image image) {
+		if (images == null) {
+			images = new HashSet<>();
+		}
+		images.add(image);
+	}
+
 }

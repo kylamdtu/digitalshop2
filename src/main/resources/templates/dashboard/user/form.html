@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+</head>
+<body>
+<h2>Tạo mới người dùng</h2>
+<form th:fragment="form(action, user)"
+      th:action="@{/admin/user/} + ${action}"
+      method="post"
+      class="col-md-6"
+      th:object="${user}"
+>
+    <br>
+    <br>
+    <input th:field="*{id}" hidden>
+    <div class="form-group">
+        <label for="name">Tên đầy đủ</label>
+        <input
+                required
+                th:field="*{name}"
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                id="name"
+        />
+        <div
+                th:if="${#fields.hasErrors('name')}"
+                th:errors="*{name}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="username">Tên người dùng</label>
+        <input
+                required
+                th:field="*{username}"
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"
+                id="username"
+        />
+        <div
+                th:if="${#fields.hasErrors('username')}"
+                th:errors="*{username}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input
+                required
+                th:field="*{email}"
+                type="email"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                id="email"
+        />
+        <div
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <input
+                th:field="*{password}"
+                type="password"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                id="password"
+        />
+        <div
+                th:if="${#fields.hasErrors('password')}"
+                th:errors="*{password}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <button class="btn btn-primary" type="submit" th:text="${action == 'create'} ? 'Tạo' : 'Sửa'"></button>
+</form>
+</body>
+</html>

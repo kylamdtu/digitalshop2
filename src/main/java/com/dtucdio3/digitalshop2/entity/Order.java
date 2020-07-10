@@ -1,33 +1,31 @@
 package com.dtucdio3.digitalshop2.entity;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Orders",
 	uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class Order {
 	private int id;
-	private Customer customer;
+	private User user;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate createDay;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate deliveryDay;
+	@Size(min = 6, message = "Độ dài tối thiểu 6 ký tự.")
+	@NotBlank(message = "Trạng thái không được để trống")
 	private String status;
 	private Set<OrderDetail> detail = new HashSet<OrderDetail>();
-	
+
+	public Order() {
+	}
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,16 +36,7 @@ public class Order {
 		this.id = id;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name = "customerId")
-	@JsonManagedReference
-	public Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-	
+
 	@Column(name = "createDay")
 	public LocalDate getCreateDay() {
 		return createDay;
@@ -74,12 +63,24 @@ public class Order {
 	
 	@OneToMany
 	@JoinColumn(name = "orderId", referencedColumnName = "id")
-	@JsonBackReference
 	public Set<OrderDetail> getDetail() {
 		return detail;
 	}
 	public void setDetail(Set<OrderDetail> detail) {
 		this.detail = detail;
 	}
-	
+
+	@ManyToOne
+	@JoinColumn(name = "userId", referencedColumnName = "id")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void addOrderDetail(OrderDetail orderDetail) {
+		detail.add(orderDetail);
+	}
 }

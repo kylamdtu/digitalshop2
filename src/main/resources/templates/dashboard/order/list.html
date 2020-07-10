@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="dashboard/fragments/head.html :: head(title='List order')">
+</head>
+
+<body>
+<nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'order')"></nav>
+<div class="container-fluid">
+    <nav
+            th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'order')"
+    ></nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <br>
+        <a href="/admin/order/create" class="btn btn-sm btn-outline-secondary">Tạo mới sản phẩm</a>
+        <hr>
+        <h2>Danh sách đơn hàng</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>#Id</th>
+                    <th>Ngày lập</th>
+                    <th>Ngày giao hàng</th>
+                    <th>Trạng thái</th>
+                    <th>Đơn hàng chi tiết</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.createDay}"></td>
+                    <td th:text="${order.deliveryDay}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td><a th:href="@{/admin/order/__${order.id}__/orderDetail}" class="btn btn-sm btn-outline-secondary">Thêm chi tiết</a></td>
+                    <td>
+                        <a th:href="@{/admin/order/edit/__${order.id}__}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a onclick="return confirm('Are you sure you want to delete this order?')"
+                           th:href="@{/admin/order/delete/__${order.id}__}"
+                           class="btn btn-sm btn-outline-secondary">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- orders pagination -->
+        <nav aria-label="Pagination" th:if="${orders.totalPages gt 0}">
+            <ul class="pagination justify-content-center font-weight-medium">
+                <li class="page-item" th:classappend="${orders.number eq 0} ? 'disabled'">
+                    <a class="page-link svg-icon"
+                       th:href="@{/admin/order?page={id}(id=${orders.number lt 2 ? 1 : orders.number})}"
+                       aria-label="Previous"
+                       title="Previous Page" rel="tooltip">
+                        <span aria-hidden="true" data-feather="chevrons-left" width="20" height="20"></span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${i eq orders.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( orders.number + 1, orders.totalPages > 10 + orders.number ? orders.number + 10 : orders.totalPages, 1)}">
+                    <a class="page-link" th:href="@{/admin/order?page={id}(id=${i})}" th:text="${i}"
+                       th:title="${'Page '+ i}"
+                       rel="tooltip"></a>
+                </li>
+                <li class="page-item disabled" th:if="${orders.number + 10 < orders.totalPages}">
+                    <a class="page-link svg-icon" href="#">
+                        <span data-feather="more-horizontal" width="20" height="20"></span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${orders.number + 1 eq orders.totalPages} ? 'disabled'">
+                    <a class="page-link svg-icon" th:href="@{/admin/order?page={id}(id=${orders.number + 2})}"
+                       aria-label="Next"
+                       title="Next Page" rel="tooltip">
+                        <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </main>
+</div>
+<th:block th:replace="dashboard/fragments/head.html :: js"></th:block>
+</body>
+</html>

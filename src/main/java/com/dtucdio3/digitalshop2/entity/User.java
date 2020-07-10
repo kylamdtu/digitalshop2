@@ -23,21 +23,24 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Size(max = 40)
+    @Size(max = 40, min = 6, message = "Độ dài tối thiểu từ 6 đến 40 ký tự.")
     private String name;
 
-    @NotBlank
-    @Size(max = 15)
+    @NaturalId(mutable = true)
+    @NotBlank(message = "Username không được trống.")
+    @Size(max = 15, min = 6, message = "Độ dài từ 6 đến 15 ký tự.")
+    @Column(unique = true)
     private String username;
 
-    @NaturalId
-    @NotBlank
-    @Size(max = 40)
+    @NaturalId(mutable = true)
+    @NotBlank(message = "Email không được để trống.")
+    @Size(max = 40, min = 6,message = "Độ dài từ 6 đến 40 ký tự.")
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 100, min = 6, message = "Độ dài tối thiểu 6 đến 100 ký tự")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -106,7 +109,9 @@ public class User {
     }
 
     public void addRole(Role role) {
-        this.roles = new HashSet<>();
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
         roles.add(role);
     }
 }

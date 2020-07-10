@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+</head>
+<body>
+<h2>Tạo mới khuyến mãi</h2>
+<form th:fragment="form(action, promotion)"
+      th:action="@{/admin/promotion/} + ${action}"
+      method="post"
+      class="col-md-6"
+      th:object="${promotion}"
+>
+    <br>
+    <br>
+    <input th:field="*{id}" hidden>
+    <div class="form-group">
+        <label for="discount">Giảm giá</label>
+        <input
+                required
+                th:field="*{discount}"
+                type="number"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('discount')} ? 'is-invalid' : ''"
+                id="discount"
+        />
+        <div
+                th:if="${#fields.hasErrors('discount')}"
+                th:errors="*{discount}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="gift">Quà tặng</label>
+        <input
+                required
+                th:field="*{gift}"
+                type="text"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('gift')} ? 'is-invalid' : ''"
+                id="gift"
+        />
+        <div
+                th:if="${#fields.hasErrors('gift')}"
+                th:errors="*{gift}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="startingDate">Ngày bắt đầu</label>
+        <input
+                required
+                th:field="*{startingDate}"
+                type="date"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('startingDate')} ? 'is-invalid' : ''"
+                id="startingDate"
+        />
+        <div
+                th:if="${#fields.hasErrors('startingDate')}"
+                th:errors="*{startingDate}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <div class="form-group">
+        <label for="endingDate">Ngày kết thúc</label>
+        <input
+                required
+                th:field="*{endingDate}"
+                type="date"
+                class="form-control"
+                th:classappend="${#fields.hasErrors('endingDate')} ? 'is-invalid' : ''"
+                id="endingDate"
+        />
+        <div
+                th:if="${#fields.hasErrors('endingDate')}"
+                th:errors="*{endingDate}"
+                class="invalid-feedback"
+        ></div>
+    </div>
+    <button class="btn btn-primary" type="submit" th:text="${action == 'create'} ? 'Tạo' : 'Sửa'"></button>
+</form>
+</body>
+</html>

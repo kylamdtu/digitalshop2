@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="dashboard/fragments/head.html :: head(title='Add order detail')">
+</head>
+
+<body>
+<nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'order')"></nav>
+<div class="container-fluid">
+    <nav
+            th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'order')"
+    ></nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <br>
+        <form
+              method="post"
+              class="col-md-6"
+              th:object="${product}"
+        >
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="category">Chi tiết đơn hàng</label>
+                    <select
+                            th:field="*{id}"
+                            name="product"
+                            class="custom-select"
+                            id="category"
+                            required
+                    >
+                        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mail">Số lượng</label>
+                    <input
+                            required
+                            type="number"
+                            class="form-control"
+                            id="mail"
+                            name="quantity"
+                    />
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Thêm chi tiết đơn hàng</button>
+        </form>
+        <hr>
+        <h2>Danh sách chi tiết đơn hàng</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>#Id</th>
+                    <th>Id sản phẩm</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="orderDetail : ${orderDetails}">
+                    <td th:text="'(' + ${orderDetail?.id?.product?.id} + ',' + ${orderDetail?.id?.order?.id} + ')'"></td>
+                    <td th:text="${orderDetail?.id?.product?.id}"></td>
+                    <td th:text="${orderDetail?.id?.product?.name}"></td>
+                    <td th:text="${orderDetail.quantity}"></td>
+                    <td>
+                        <a onclick="return confirm('Are you sure you want to delete this promotion?')"
+                           th:href="@{/admin/order/__${orderId}__/remove/orderDetail/__${orderDetail.id?.product?.id}__}"
+                           class="btn btn-sm btn-outline-secondary">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<th:block th:replace="dashboard/fragments/head.html :: js"></th:block>
+</body>
+</html>

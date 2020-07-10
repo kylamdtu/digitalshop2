@@ -1,15 +1,5 @@
 package com.dtucdio3.digitalshop2.entity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Image",
@@ -31,7 +21,6 @@ public class Image {
 	
 	@ManyToOne
 	@JoinColumn(name = "productId")
-	@JsonManagedReference
 	public Product getProduct() {
 		return product;
 	}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="dashboard/fragments/head.html :: head(title='Create user')">
+</head>
+<body>
+<nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'user')"></nav>
+<div class="container-fluid">
+  <nav th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'user')">
+  </nav>
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <form th:replace="dashboard/user/form.html :: form(action = 'create', user = ${user})"></form>
+  </main>
+</div>
+<th:block th:replace="dashboard/fragments/head.html :: js">
+</th:block>
+</body>
+
+</html>

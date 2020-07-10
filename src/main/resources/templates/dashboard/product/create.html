@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
-<head th:replace="dashboard/fragments/head.html :: head(title='Dashboard')">
+<head th:replace="dashboard/fragments/head.html :: head(title='Create product')">
 </head>
 <body>
-<nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'dashboard')"></nav>
+<nav th:replace="dashboard/fragments/nav-bar.html :: nav-bar(page = 'product')"></nav>
 <div class="container-fluid">
   <nav th:replace="dashboard/fragments/side-bar.html :: side-bar(current = 'home')">
   </nav>
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-    <form th:replace="dashboard/product/form.html :: product-form(action = 'create', product = ${product})"></form>
+    <form th:replace="dashboard/product/form.html :: form(action = 'create', product = ${product})"></form>
   </main>
 </div>
 <th:block th:replace="dashboard/fragments/head.html :: js">
