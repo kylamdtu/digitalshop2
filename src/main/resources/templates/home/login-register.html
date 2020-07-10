@@ -9,7 +9,7 @@
     <th:block th:insert="~{home/fragment/header :: link}"></th:block>
 </head>
 <body>
-<header th:insert="~{home/fragment/header :: header(categories = ${categories})}"></header>
+<header th:insert="~{home/fragment/header :: header(categories = ${categories}, cart = ${cart})}"></header>
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
