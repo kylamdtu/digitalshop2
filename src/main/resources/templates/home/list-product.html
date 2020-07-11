@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Digital Shop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:insert="~{home/fragment/header :: link}"></th:block>
+</head>
+<body>
+<header th:insert="~{home/fragment/header :: header(categories = ${categories}, cart = ${cart})}"></header>
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="breadcrumb-content">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="active">Danh sách sản phẩm</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- Begin Li's Content Wraper Area -->
+<div class="content-wraper pt-60 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 order-1 order-lg-2">
+                <!-- shop-top-bar start -->
+                <div class="shop-top-bar mt-30">
+                    <div class="shop-bar-inner">
+                        <div class="product-view-mode">
+                            <!-- shop-item-filter-list start -->
+                            <ul class="nav shop-item-filter-list" role="tablist">
+                                <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="grid-view"
+                                                           href="#grid-view"><i class="fa fa-th"></i></a></li>
+                                <li class="active" role="presentation"><a aria-selected="true" class="active show"
+                                                                          data-toggle="tab" role="tab"
+                                                                          aria-controls="list-view" href="#list-view"><i
+                                        class="fa fa-th-list"></i></a></li>
+                            </ul>
+                            <!-- shop-item-filter-list end -->
+                        </div>
+                        <div class="toolbar-amount">
+                            <span th:text="'Hiển thị ' + ${products.number + 1} + ' đến ' + ${products.numberOfElements} + ' Của ' + ${products.totalElements}"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- shop-top-bar end -->
+                <!-- shop-products-wrapper start -->
+                <div class="shop-products-wrapper">
+                    <div class="tab-content">
+                        <div id="grid-view" class="tab-pane fade" role="tabpanel">
+                            <div class="product-area shop-product-area">
+                                <div class="row">
+                                    <div th:each="product :${products}" class="col-lg-4 col-md-4 col-sm-6 mt-40">
+                                        <!-- single-product-wrap start -->
+                                        <div class="single-product-wrap">
+                                            <div class="product-image">
+                                                <a th:href="@{product-detail/__${product.id}__}">
+                                                    <img th:height="170"
+                                                         th:src="@{images/product/large-size/__${product?.firstImage()?.imageUrl}__}" alt="Li's Product Image">
+                                                </a>
+                                            </div>
+                                            <div class="product_desc">
+                                                <div class="product_desc_info">
+                                                    <div class="product-review">
+                                                        <h5 class="manufacturer">
+                                                            <a th:href="@{product-detail/__${product.id}__}" th:text="*{product.name}"></a>
+                                                        </h5>
+                                                        <div class="rating-box">
+                                                            <ul class="rating">
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h4><a class="product_name" th:href="@{product-detail/__${product.id}__}" th:text="*{product.name}"></a></h4>
+                                                    <div class="price-box">
+                                                        <span class="new-price" th:text="*{#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="add-actions">
+                                                    <ul class="add-actions-link">
+                                                        <li class="add-cart active"><a th:href="@{/addToCart/__${product.id}__}">Add to
+                                                            cart</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-product-wrap end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="list-view" class="tab-pane fade product-list-view active show" role="tabpanel">
+                            <div class="row">
+                                <div class="col">
+                                    <div th:each="product : ${products}" class="row product-layout-list">
+                                        <div class="col-lg-3 col-md-5 ">
+                                            <div class="product-image">
+                                                <a th:href="@{product-detail/__${product.id}__}">
+                                                    <img th:src="@{images/product/large-size/__${product?.firstImage()?.imageUrl}__}"
+                                                         alt="Li's Product Image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 col-md-7">
+                                            <div class="product_desc">
+                                                <div class="product_desc_info">
+                                                    <div class="product-review">
+                                                        <h5 class="manufacturer">
+                                                            <a th:href="@{product-detail/__${product.id}__}" th:text="*{product.name}"></a>
+                                                        </h5>
+                                                        <div class="rating-box">
+                                                            <ul class="rating">
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h4><a class="product_name" th:href="@{product-detail/__${product.id}__}" th:text="*{product.name}"></a></h4>
+                                                    <div class="price-box">
+                                                        <span class="new-price" th:text="*{#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></span>
+                                                    </div>
+                                                    <p th:text="${product.description}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="shop-add-action mb-xs-30">
+                                                <ul class="add-actions-link">
+                                                    <li class="add-cart"><a th:href="@{/addToCart/__${product.id}__}">Add to
+                                                        cart</a></li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="paginatoin-area">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <ul class="pagination-box" th:if="${products.totalPages gt 0}">
+                                        <li th:classappend="${products.number eq 0} ? 'disabled'">
+                                            <a th:href="@{/search?page={id}&keyword={keyword}(id=${products.number lt 2 ? 1 : products.number}, keyword = ${keyword})}" class="Previous"><i class="fa fa-chevron-left"></i> Trước</a>
+                                        </li>
+                                        <li
+                                                class="page-item"
+                                                th:classappend="${i eq products.number + 1} ? 'active'"
+                                                th:each="i : ${#numbers.sequence( products.number + 1, products.totalPages > 10 + products.number ? products.number + 10 : products.totalPages, 1)}"
+                                        ><a th:href="@{/search?page={id}&keyword={keyword}(id=${i}, keyword = ${keyword})}" th:text="${i}"
+                                            th:title="${'Page '+ i}">1</a></li>
+                                        <li th:classappend="${products.number + 1 eq products.totalPages} ? 'disabled'">
+                                            <a th:href="@{/search?page={id}&keyword={keyword}(id=${products.number + 2}, keyword = ${keyword})}" class="Next"> Tiếp <i class="fa fa-chevron-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- shop-products-wrapper end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content Wraper Area End Here -->
+<footer th:insert="~{home/fragment/footer :: footer}"></footer>
+<th:block th:insert="~{home/fragment/footer :: js}"></th:block>
+</body>
+</html>
+

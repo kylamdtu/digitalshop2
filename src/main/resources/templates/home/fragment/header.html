@@ -38,6 +38,15 @@
         <link rel="stylesheet" href="/css/responsive.css">
         <!-- Modernizr js -->
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+        <style>
+            .disabled {
+                color: #6c757d;
+                pointer-events: none;
+                cursor: auto;
+                background-color: #fff;
+                border-color: #dee2e6;
+            }
+        </style>
     </th:block>
 </head>
 <body>
@@ -99,12 +108,12 @@
                 <!-- Begin Header Middle Right Area -->
                 <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                     <!-- Begin Header Middle Searchbox Area -->
-                    <form action="#" class="hm-searchbox">
-                        <select class="nice-select select-search-category">
+                    <form th:action="@{/search}" method="get" class="hm-searchbox">
+                        <select name="categoryId" class="nice-select select-search-category">
                             <option value="0">Tất cả</option>
-                            <option th:each="category : ${categories}" th:text="${category.name}">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
                             </option>
-                        </select> <input type="text" placeholder="Nhập từ khóa ...">
+                        </select> <input name="keyword" type="text" placeholder="Nhập từ khóa ...">
                         <button class="li-btn" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -128,10 +137,12 @@
                                     <ul class="minicart-product-list">
                                         <li th:each="p : ${cart.getProducts()}">
                                             <a th:href="@{/product-detail/__${p.id}__}" class="minicart-product-image">
-                                                <img th:src="@{/images/product/large-size/__${p.firstImage().imageUrl}__}" alt="cart products">
+                                                <img th:src="@{/images/product/large-size/__${p.firstImage().imageUrl}__}"
+                                                     alt="cart products">
                                             </a>
                                             <div class="minicart-product-details">
-                                                <h6><a th:href="@{/product-detail/__${p.id}__}" th:text="${p.name}"></a></h6>
+                                                <h6><a th:href="@{/product-detail/__${p.id}__}" th:text="${p.name}"></a>
+                                                </h6>
                                                 <span th:text="*{#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ' + ' x ' + ${cart.getProductQuantity(p)}"></span>
                                             </div>
                                             <button class="close">
@@ -140,7 +151,9 @@
                                         </li>
                                     </ul>
                                     <p class="minicart-total">
-                                        Tổng tiền: <span th:text="*{#numbers.formatDecimal(cart.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></p>
+                                        Tổng tiền: <span
+                                            th:text="*{#numbers.formatDecimal(cart.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                    </p>
                                     <div class="minicart-button">
                                         <a href="/checkout"
                                            class="li-button li-button-dark li-button-fullwidth li-button-sm">

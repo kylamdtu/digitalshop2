@@ -6,12 +6,15 @@ import com.dtucdio3.digitalshop2.service.OrderService;
 import com.dtucdio3.digitalshop2.service.ProductService;
 import com.dtucdio3.digitalshop2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
@@ -107,6 +110,31 @@ public class HomeController {
 			cart.clear();
 			return "redirect:/checkout?success";
 		}
+	}
+
+
+	@GetMapping("/search")
+	public String listProduct(Pageable pageable, Model model, HttpServletRequest request, @RequestParam(name = "keyword", required = false) String keyword, @RequestParam(name = "categoryId", required = false) Integer categoryId ) {
+		int page = 0;
+		int size = 10;
+
+		if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+			if (Integer.parseInt(request.getParameter("page")) < 1) {
+				page = 0;
+			} else {
+				page = Integer.parseInt(request.getParameter("page")) - 1;
+			}
+		}
+
+		if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+			if (Integer.parseInt(request.getParameter("size")) < 1) {
+				size = 1;
+			} else {
+				size = Integer.parseInt(request.getParameter("size"));
+			}
+		}
+		model.addAttribute("products", productService.search(keyword, categoryId, PageRequest.of(page, size)));
+		return "home/list-product";
 	}
 
 

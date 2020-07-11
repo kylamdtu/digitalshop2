@@ -5,6 +5,7 @@ import com.dtucdio3.digitalshop2.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,5 +37,13 @@ public class ProductService {
 	
 	public List<Product> listByCategory(Category category){
 		return productRepo.findByCategory(category);
+	}
+
+	public Page<Product> search(String keyword, Integer categoryId,Pageable pageable) {
+		return productRepo.findAll(
+				Specification.where(ProductSpecification.nameContainKeyword(keyword))
+				.or(ProductSpecification.descriptionContainKeyword(keyword))
+				.and(ProductSpecification.hasCategory(categoryId))
+				, pageable);
 	}
 }
