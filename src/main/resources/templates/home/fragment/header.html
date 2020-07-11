@@ -110,7 +110,7 @@
                     <!-- Begin Header Middle Searchbox Area -->
                     <form th:action="@{/search}" method="get" class="hm-searchbox">
                         <select name="categoryId" class="nice-select select-search-category">
-                            <option value="0">Tất cả</option>
+                            <option th:value="${null}">Tất cả</option>
                             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
                             </option>
                         </select> <input name="keyword" type="text" placeholder="Nhập từ khóa ...">
